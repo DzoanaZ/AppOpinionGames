@@ -1,4 +1,4 @@
-package pl.gamesrating.app.DAO;
+package pl.gamesrating.app.model;
 
 import javax.persistence.*;
 import java.util.List;

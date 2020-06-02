@@ -1,7 +1,9 @@
 package pl.gamesrating.app.service;
 
-import pl.gamesrating.app.DTO.CategoryDTO;
+import pl.gamesrating.app.model.Category;
 
 public interface CategoryService {
-    CategoryDTO createCategory(CategoryDTO categoryDTO);
+    Category createCategory(Category category);
+    Iterable<Category> getAllCategories();
+
 }

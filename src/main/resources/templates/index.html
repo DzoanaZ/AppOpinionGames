@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org" lang="pl-PL">
+<head>
+    <meta charset="UTF-8">
+    <title>games-rating.pl</title>
+    <object th:include="/fragment/main :: head_css" th:remove="tag"/>
+    <object th:include="/fragment/main :: head_js" th:remove="tag"/>
+</head>
+<body>
+<div class="wrapper">
+    <object th:include="/fragment/main :: header" th:remove="tag"/>
+
+    <object th:include="/fragment/main :: navigation" th:remove="tag"/>
+
+    <article class="news">
+        <section>
+            <h1>NOWOŚCI</h1>
+            <div class="container">
+                <div class="row">
+                    <div th:each="post : ${news}"
+                         class="review d-flex flex-row align-items-start justify-content-start col-md-6">
+                        <img class="left radius" th:src="${prepareFileDirectory + post.imgPath}" th:alt="${post.title}">
+                        <div class="news_content">
+                            <div class="review_name"><a th:href="${'/post/' + post.id}" th:text="${post.title}">Title</a></div>
+                            <div class="review_rating_container">
+                                <div class="rating_r  review_rating">
+                                    <i th:classappend="${post.editorialRating>= 1} ? 'checked' : ''"
+                                       class="fa fa-star"></i>
+                                    <i th:classappend="${post.editorialRating>= 2} ? 'checked' : ''"
+                                       class="fa fa-star"></i>
+                                    <i th:classappend="${post.editorialRating>= 3} ? 'checked' : ''"
+                                       class="fa fa-star"></i>
+                                    <i th:classappend="${post.editorialRating>= 4} ? 'checked' : ''"
+                                       class="fa fa-star"></i>
+                                    <i th:classappend="${post.editorialRating== 5} ? 'checked' : ''"
+                                       class="fa fa-star"></i>
+                                </div>
+                                <div class="review_time"
+                                     th:text="${#temporals.format(post.publicationDate, 'dd-MM-yyyy')}">Data
+                                </div>
+                            </div>
+                            <div class="review_text"><p th:text="${post.shortDescription}">Lorem ipsum dolor sit amet,
+                                consectetur
+                                adipiscing elit. Maecenas fermentum laoreet.</p></div>
+                        </div> <!--/ .review_content -->
+                    </div> <!--/ .review -->
+                </div>
+            </div>
+        </section>
+        <section class="posts">
+            <div class="container post">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Frostpunk - najwyżej oceniana polska gra.</h1>
+                    </div>
+                    <div class="col-md-12">
+                        <img class="w80 center" th:src="@{/img/frostpunknews1.jpg}"
+                             src="../static/img/frostpunknews1.jpg" alt="">
+                        <p>Frostpunk
+                            to obecnie najlepiej oceniana polska gra. 11 bit
+                            studio dostarczyło grę, która zbiera najlepsze oceny od czasu Wiedźmina 3.</p>
+
+                        <iframe width="600" height="400" src="https://www.youtube.com/embed/6saqbmVT9qk?start=11"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div> <!-- / container post -->
+            <div class="container post">
+                <div class="row">
+                    <div class="col-md-9">
+                        <p>Każdy zarejestrowany i zalogowany użytkownik otrzymuje możliwość
+                            dodawania do bazy nowych gier oraz wprowadzania poprawek do istniejących już opisów bądź też
+                            ich
+                            rozbudowywania.</p>
+                    </div>
+                    <div class="col-md-3 margin-bottom-md">
+                        <img class="radius" th:src="@{/img/grafika2.jpg}" src="../static/img/grafika2.jpg" alt="">
+                    </div>
+
+                    <div class="col-md-12">
+                        <iframe width="600" height="400" src="https://www.youtube.com/embed/2gUtfBmw86Y" frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div> <!-- / container post -->
+        </section>
+
+        <section class="post">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-11 offset-1">
+                        <h3>Popularne recenzje</h3>
+                        <div class="reviews_container">
+                            <div th:each="post : ${news}"
+                                 class="review d-flex flex-row align-items-start justify-content-start">
+                                <div class="review_image"><img th:src="${prepareFileDirectory + post.imgPath}"
+                                                               src="../static/img/review_1.jpg" alt=""></div>
+                                <div class="review_content">
+                                    <div class="review_name"><a th:href="${'/post/' + post.id}" th:text="${post.title}">Title</a></div>
+                                    <div class="review_rating_container">
+                                        <div class="rating_r  review_rating">
+                                            <i th:classappend="${post.editorialRating>= 1} ? 'checked' : ''"
+                                               class="fa fa-star"></i>
+                                            <i th:classappend="${post.editorialRating>= 2} ? 'checked' : ''"
+                                               class="fa fa-star"></i>
+                                            <i th:classappend="${post.editorialRating>= 3} ? 'checked' : ''"
+                                               class="fa fa-star"></i>
+                                            <i th:classappend="${post.editorialRating>= 4} ? 'checked' : ''"
+                                               class="fa fa-star"></i>
+                                            <i th:classappend="${post.editorialRating== 5} ? 'checked' : ''"
+                                               class="fa fa-star"></i>
+                                        </div>
+                                        <div class="review_time"
+                                             th:text="${#temporals.format(post.publicationDate, 'dd-MM-yyyy')}">Data
+                                        </div>
+                                    </div>
+                                    <div class="review_text"><p th:text="${post.shortDescription}">Lorem ipsum dolor sit
+                                        amet, consectetur
+                                        adipiscing elit. Maecenas fermentum laoreet.</p></div>
+                                </div> <!--/ .review_content -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>
+    <object th:include="/fragment/main :: footer" th:remove="tag"/>
+</div>
+<object th:include="/fragment/main :: js" th:remove="tag"/>
+</body>
+</html>

@@ -1,7 +1,9 @@
-package pl.gamesrating.app.DAO;
+package pl.gamesrating.app.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 public class Post {
     @Id
@@ -9,22 +11,34 @@ public class Post {
     private  Long id;
     private String title;
     private String description;
+    private String shortDescription;
     private Double editorialRate;
     private Double usersRate;
     private LocalDate publicationDate;
     @ManyToOne
     private Category category;
+    @ManyToOne
+    private User author;
+
+    private String imgPath;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Rating> ratings;
 
     public Post() {
     }
 
-    public Post(String title, String description, Double editorialRate, Double usersRate, LocalDate publicationDate, Category category) {
+    public Post(String title, String description, String shortDescription, Double editorialRate, Double usersRate, LocalDate publicationDate, Category category, User author, String imgPath, List<Rating> ratings) {
         this.title = title;
         this.description = description;
+        this.shortDescription = shortDescription;
         this.editorialRate = editorialRate;
         this.usersRate = usersRate;
         this.publicationDate = publicationDate;
         this.category = category;
+        this.author = author;
+        this.imgPath = imgPath;
+        this.ratings = ratings;
     }
 
     public Long getId() {
@@ -81,5 +95,37 @@ public class Post {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

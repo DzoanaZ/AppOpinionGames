@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org" lang="pl-PL">
+<head>
+    <object th:fragment="head_css" th:remove="tag">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../../static/css/bootstrap.css">
+        <link rel="stylesheet" th:href="@{/css/style.css}" href="../../static/css/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+              integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+              crossorigin="anonymous">
+    </object>
+    <object th:fragment="head_js" th:remove="tag">
+        <script th:src="@{/js/jquery-3.3.1.min.js}" src="../../static/js/jquery-3.3.1.min.js"></script>
+        <script th:src="@{/js/popper.min.js}" src="../../static/js/popper.min.js"></script>
+        <script th:src="@{/js/bootstrap.js}" src="../../static/js/bootstrap.js"></script>
+    </object>
+</head>
+<body>
+
+<object th:fragment="header" th:remove="tag">
+    <header>
+        <p sec:authorize="isAuthenticated()" class="loged">Witaj [[${#httpServletRequest.getRemoteUser()}]]!</p>
+        <img th:src="@{/img/header.png}" src="../../static/img/header.png" alt="">
+    </header>
+</object>
+<object th:fragment="navigation" th:remove="tag">
+    <nav id="navbar">
+        <ul class="nav nav-pills nav-fill">
+            <li sec:authorize="!isAuthenticated()" class="nav-item">
+                <a class="nav-link active" href="/">Strona główna</a>
+            </li>
+
+            <li sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" href="/">Strona główna</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Kategorie gier
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item"
+                       th:each="category : ${gameCategories}"
+                       th:href="${'/reviews/type/' + category.id}"
+                       th:text="${category.name}">Kategoria 1</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/reviews">Recenzje</a>
+            </li>
+            <li sec:authorize="!isAuthenticated()" class="nav-item">
+                <a class="nav-link" href="" data-toggle="modal" data-target="#modalFroms">Zaloguj</a>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                <a class="nav-link active dropdown-toggle" href="#" id="userActions" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Akcje
+                </a>
+                <div class="dropdown-menu" aria-labelledby="userActions">
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/admin/post/new">Dodaj
+                        recenzje</a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/admin/categories">Edytuj
+                        kategorie</a>
+                    <a class="dropdown-item" href="/logout">Wyloguj</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div sec:authorize="!isAuthenticated()" class="modal fade bd-example-modal-lg" id="modalFroms" tabindex="-1"
+         role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <br>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-sign-tab" data-toggle="tab" href="#nav-sign"
+                           role="tab" aria-controls="nav-home" aria-selected="true">Logowanie</a>
+                        <a class="nav-item nav-link" id="nav-register-tab" data-toggle="tab" href="#nav-register"
+                           role="tab" aria-controls="nav-profile" aria-selected="false">Rejestracja</a>
+                    </div>
+                </nav>
+                <div class="modal-body tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-sign" role="tabpanel" aria-labelledby="nav-sign-tab">
+                        <form role="form" class="form-horizontal" th:action="@{/}" th:method="POST">
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label" for="login">Login:</label>
+                                    <div class="controls">
+                                        <input required id="login" name="login" type="text"
+                                               class="form-control input-medium">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="password">Hasło:</label>
+                                    <div class="controls">
+                                        <input required id="password" name="password" class="form-control input-medium"
+                                               type="password" placeholder="********">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="signin"></label>
+                                    <div class="controls">
+                                        <button type="submit" id="signin" name="signin" class="btn btn-success">
+                                            Zaloguj
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div> <!--/ .tab-pane 'Sigin' -->
+                    <!--Register tab-->
+                    <div class="tab-pane fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
+                        <form role="form" class="form-horizontal" th:action="@{/account/new}" th:method="POST">
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label" for="remail">Email:</label>
+                                    <div class="controls">
+                                        <input id="remail" name="email" class="form-control input-large" type="email"
+                                               placeholder="example@mail.com" required>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="rlogin">Nazwa:</label>
+                                    <div class="controls">
+                                        <input id="rlogin" name="name" class="form-control input-large"
+                                               type="text" required>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="password">Hasło:</label>
+                                    <div class="controls">
+                                        <input id="rpassword" name="password" class="form-control input-large"
+                                               type="password" placeholder="********" required>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="rpassword2">Powtórz hasło:</label>
+                                    <div class="controls">
+                                        <input id="rpassword2" class="form-control input-large"
+                                               name="matchingPassword" type="password" placeholder="********" required>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="control-group">
+                                    <label class="control-label" for="confirmsignup"></label>
+                                    <div class="controls">
+                                        <button id="confirmsignup" name="confirmsignup" class="btn btn-success">
+                                            Zarejestruj
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div><!--/ Register tab-->
+                </div> <!--/ .modal-body tab-content -->
+                <div class="modal-footer align-content-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                </div>
+            </div> <!--/.modal-content -->
+        </div> <!--/ .modal-dialog -->
+    </div> <!--/ #modalFroms -->
+</object>
+
+<object th:fragment="footer" th:remove="tag">
+    <footer>Copyright &copy; Joanna Zubel | Politechnika Rzeszowska <br>
+        <small>Aplikacja internetowa do ocenania i opiniowania gier</small>
+    </footer>
+</object>
+
+<object th:fragment="js" th:remove="tag">
+    <script>
+        window.onscroll = function () {
+            myFunction();
+        };
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("fixed-top");
+            } else {
+                navbar.classList.remove("fixed-top");
+            }
+        }
+    </script>
+</object>
+</body>
+</html>
