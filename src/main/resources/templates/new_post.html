@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--suppress CheckEmptyScriptTag -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>games-rating.pl - Recenzje</title>
+    <object th:include="/fragment/main :: head_css" th:remove="tag"/>
+    <object th:include="/fragment/main :: head_js" th:remove="tag"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <object th:include="/fragment/main :: header" th:remove="tag"/>
+    <object th:include="/fragment/main :: navigation" th:remove="tag"/>
+    <article class="news">
+        <section class="post">
+            <h1>Dodaj nową recenzję</h1>
+            <div class="container">
+                <div class="row">
+                    <form class="col-md-12" th:action="@{/admin/post/new}" th:object="${newPost}" th:method="POST" enctype="multipart/form-data">
+                        <div class="control-group">
+                            <label class="control-label" for="rating">Ocena:</label>
+                            <div class="controls">
+                                <div class="rating" id="rating">
+                                    <input type="radio" id="star5" th:field="*{editorialRating}" name="rating" value="5"/>
+                                    <label class="full" for="star5" title="Super!"></label>
+
+                                    <input type="radio" id="star4" th:field="*{editorialRating}" name="rating" value="4"/>
+                                    <label class="full" for="star4" title="Całkiem dobra :)"></label>
+
+                                    <input type="radio" id="star3" th:field="*{editorialRating}" name="rating" value="3"/>
+                                    <label class="full" for="star3" title="Przecietna"></label>
+
+                                    <input type="radio" id="star2" th:field="*{editorialRating}" name="rating" value="2"/>
+                                    <label class="full" for="star2" title="Słaba"></label>
+
+                                    <input type="radio" id="star1" th:field="*{editorialRating}" name="rating" value="1"/>
+                                    <label class="full" for="star1" title="Dno! :("></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="title">Tytuł:</label>
+                            <div class="controls">
+                                <input type="text" id="title" th:field="*{title}" name="title" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="category">Kategoria:</label>
+                            <div class="controls">
+                                <select id="category" th:field="*{categoryId}" name="category" class="form-control" required>
+                                    <option value="" selected></option>
+                                    <option th:each="category : ${gameCategories}"
+                                            th:value="${category.id}"
+                                            th:text="${category.name}">Opcja 1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="editor">Treść:</label>
+                            <div class="controls">
+                                <textarea id="editor" name="comment" th:field="*{description}" class="form-control" rows="20" required> </textarea>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="file">Zjęcie w tle:</label>
+                            <div class="controls">
+                                <input type="file" id="file" th:field="*{image}" name="file" accept=".jpg,.jpeg,.png" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="send"></label>
+                            <div class="controls">
+                                <button id="send" type="submit" name="send" class="btn btn-success">Wyślij</button>
+                            </div>
+                        </div>
+                    </form>
+                </div> <!--/.row-->
+            </div> <!--/.container-->
+        </section>
+    </article>
+
+    <object th:include="/fragment/main :: footer" th:remove="tag"/>
+</div>
+<object th:include="/fragment/main :: js" th:remove="tag"/>
+<script>
+    $('#editor').summernote({
+        placeholder: 'Uzupełnij treść ogłoszenia',
+        tabsize: 8,
+        height: 300
+    });
+</script>
+</body>
+</html>
