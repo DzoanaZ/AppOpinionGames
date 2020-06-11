@@ -25,14 +25,14 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping("/admin/post/new")
+    @GetMapping("/admin/post/new") //żądanie na formularz dodawania recenzji(postu)
     public String getNewPost(Model model){
         model.addAttribute("gameCategories", categoryService.getAllCategories());
         model.addAttribute("newPost", new PostDTO());
         return "new_post";
     }
 
-    @PostMapping("/admin/post/new")
+    @PostMapping("/admin/post/new") //przesłanie danych z formularza
     public String createNewPost(@ModelAttribute ("newPost") @Valid PostDTO postDTO){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = null;

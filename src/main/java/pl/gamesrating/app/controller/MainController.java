@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import pl.gamesrating.app.service.CategoryService;
 import pl.gamesrating.app.service.PostService;
 
+
 @Controller
 public class MainController {
     @Autowired
@@ -16,6 +17,7 @@ public class MainController {
 
     @GetMapping("/")
     public String getIndexPage(Model model){
+
         model.addAttribute("news",postService.getNews());
         model.addAttribute("gameCategories", categoryService.getAllCategories());
         model.addAttribute("prepareFileDirectory", "/img/files");

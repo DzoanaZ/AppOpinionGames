@@ -24,15 +24,15 @@
                             <div class="review_name"><a th:href="${'/post/' + post.id}" th:text="${post.title}">Title</a></div>
                             <div class="review_rating_container">
                                 <div class="rating_r  review_rating">
-                                    <i th:classappend="${post.editorialRating>= 1} ? 'checked' : ''"
+                                    <i th:classappend="${post.editorialRate>= 1} ? 'checked' : ''"
                                        class="fa fa-star"></i>
-                                    <i th:classappend="${post.editorialRating>= 2} ? 'checked' : ''"
+                                    <i th:classappend="${post.editorialRate>= 2} ? 'checked' : ''"
                                        class="fa fa-star"></i>
-                                    <i th:classappend="${post.editorialRating>= 3} ? 'checked' : ''"
+                                    <i th:classappend="${post.editorialRate>= 3} ? 'checked' : ''"
                                        class="fa fa-star"></i>
-                                    <i th:classappend="${post.editorialRating>= 4} ? 'checked' : ''"
+                                    <i th:classappend="${post.editorialRate>= 4} ? 'checked' : ''"
                                        class="fa fa-star"></i>
-                                    <i th:classappend="${post.editorialRating== 5} ? 'checked' : ''"
+                                    <i th:classappend="${post.editorialRate== 5} ? 'checked' : ''"
                                        class="fa fa-star"></i>
                                 </div>
                                 <div class="review_time"
@@ -102,15 +102,15 @@
                                     <div class="review_name"><a th:href="${'/post/' + post.id}" th:text="${post.title}">Title</a></div>
                                     <div class="review_rating_container">
                                         <div class="rating_r  review_rating">
-                                            <i th:classappend="${post.editorialRating>= 1} ? 'checked' : ''"
+                                            <i th:classappend="${post.editorialRate>= 1} ? 'checked' : ''"
                                                class="fa fa-star"></i>
-                                            <i th:classappend="${post.editorialRating>= 2} ? 'checked' : ''"
+                                            <i th:classappend="${post.editorialRate>= 2} ? 'checked' : ''"
                                                class="fa fa-star"></i>
-                                            <i th:classappend="${post.editorialRating>= 3} ? 'checked' : ''"
+                                            <i th:classappend="${post.editorialRate>= 3} ? 'checked' : ''"
                                                class="fa fa-star"></i>
-                                            <i th:classappend="${post.editorialRating>= 4} ? 'checked' : ''"
+                                            <i th:classappend="${post.editorialRate>= 4} ? 'checked' : ''"
                                                class="fa fa-star"></i>
-                                            <i th:classappend="${post.editorialRating== 5} ? 'checked' : ''"
+                                            <i th:classappend="${post.editorialRate== 5} ? 'checked' : ''"
                                                class="fa fa-star"></i>
                                         </div>
                                         <div class="review_time"
