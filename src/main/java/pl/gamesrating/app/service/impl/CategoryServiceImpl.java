@@ -6,8 +6,6 @@ import pl.gamesrating.app.model.Category;
 import pl.gamesrating.app.repository.CategoryRepository;
 import pl.gamesrating.app.service.CategoryService;
 
-import java.util.List;
-
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
@@ -37,6 +35,4 @@ public class CategoryServiceImpl implements CategoryService {
     public Iterable<Category> getCategoriesByName(String name) {
         return categoryRepository.findAllByNameIgnoreCase(name);
     }
-
-
 }

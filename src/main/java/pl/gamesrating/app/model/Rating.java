@@ -89,4 +89,8 @@ public class Rating {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public boolean isEditorialRating() {
+        return type.equals(Type.EDITORIAL);
+    }
 }

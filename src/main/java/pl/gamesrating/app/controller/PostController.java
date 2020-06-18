@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.gamesrating.app.model.DTO.PostDTO;
+import pl.gamesrating.app.model.Post;
 import pl.gamesrating.app.model.User;
 import pl.gamesrating.app.repository.UserRepository;
 import pl.gamesrating.app.service.CategoryService;
@@ -43,5 +45,26 @@ public class PostController {
             postService.savePost(postDTO, user);
         }
         return "redirect:/"; //przekierowanie na stronę główną
+    }
+    @GetMapping(value = "/post/{id}")
+    public String getSinglePost(Model model, @PathVariable("id") Long postId) {
+        model.addAttribute("gameCategories",categoryService.getAllCategories());
+        //Post post = postRepository.findById(postId).isPresent() ? postRepository.findById(postId).get() : null;
+        Post post = postService.findById(postId);
+        if (post == null)
+            return "redirect:/404";
+        model.addAttribute("singlePost", post);
+        model.addAttribute("prepareFileDirectory", "/img/files");
+        return "review_post";
+    }
+
+    @GetMapping(value = "/admin/post/delete/{id}")
+    public String deletePostById(@PathVariable("id") long postId) {
+
+            Post post = postService.findById(postId);
+            if(post!=null) {
+                postService.delete(post);
+            }
+        return "redirect:/";
     }
 }

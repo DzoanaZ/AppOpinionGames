@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         user.setActive(1);
 
         this.addUserRole(user);
-        this.addAdminRole(user);
+        //this.addAdminRole(user);
 
         return userRepository.save(user);
     }

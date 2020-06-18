@@ -11,4 +11,9 @@ public interface PostService {
 
     void savePost(PostDTO postDTO, User user);
 
+    Post findById (Long id);
+
+    List<Post> getAllPosts();
+
+    void delete(Post post);
 }

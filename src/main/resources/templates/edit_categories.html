@@ -26,14 +26,16 @@
                         <tr>
                             <td>ID</td>
                             <td>Kategoria</td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="category : ${categories}">
-                            <td class="col-sm-4">
+                            <td class="col-sm-2">
                                 <input type="text" name="id" class="form-control" th:value="${category.id}" readonly/>
                             </td>
-                            <td class="col-sm-4">
+                            <td class="col-sm-8">
                                 <input type="text" name="name" class="form-control" th:value="${category.name}"/>
                             </td>
                             <td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "
@@ -169,7 +171,20 @@
     });
 
     function saveOrUpdate(id, name) {
-        var xhttp;
+        $.ajax({
+            type: "GET",
+            url: "/admin/categories/new/?id="+(id ? id : -1)+"&name="+name,
+            dataType: "text",
+            success: function(){
+                alert("Kategoria zapisana z sukcesem.");
+                location.reload();
+            },
+            error: function () {
+                alert ("Nie udało się zapisać kategorii.");
+
+            }
+        });
+        /*var xhttp;
         xhttp = new XMLHttpRequest();
         query = "?id="+(id ? id : -1)+"&name="+name;
         xhttp.onreadystatechange = function () {
@@ -181,12 +196,26 @@
             }
         };
         xhttp.open("GET", "/admin/categories/new/" + query, true);
-        xhttp.send();
+        xhttp.send();*/
 
     }
 
     function isDeleted(value, tr, name) {
-        var xhttp;
+        $.ajax({
+            type: "GET",
+            url: "/admin/categories/delete/" + value,
+            dataType: "text",
+            success: function(){
+                alert("Usunięto kategorię \"" + name + "\"");
+                tr.remove();
+            },
+            error: function () {
+                alert("Nie można usunąć kategorię \"" + name + "\"");
+
+            }
+        });
+
+        /*var xhttp;
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -197,7 +226,7 @@
             }
         };
         xhttp.open("GET", "/admin/categories/delete/" + value, true);
-        xhttp.send();
+        xhttp.send();*/
     }
 </script>
 </body>

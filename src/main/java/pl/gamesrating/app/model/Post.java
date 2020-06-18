@@ -2,6 +2,7 @@ package pl.gamesrating.app.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -128,5 +129,131 @@ public class Post {
 
     public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+
+    public List<Rating> getUsersRatings() {
+        List<Rating> usersRatings = new ArrayList<>();
+        for (Rating tmp : this.ratings) {
+            if(!tmp.isEditorialRating()) {
+                usersRatings.add(tmp);
+            }
+        }
+        return usersRatings;
+    }
+
+    public List<Rating> getEditorialsRatings() {
+        List<Rating> editorialsRatings = new ArrayList<>();
+        for (Rating tmp : this.ratings) {
+            if(tmp.isEditorialRating()) {
+                editorialsRatings.add(tmp);
+            }
+        }
+        return editorialsRatings;
+    }
+
+    public int count5EditorialValues() {
+        return countRatingValue(5.0, Rating.Type.EDITORIAL);
+    }
+    public int count4EditorialValues() {
+        return countRatingValue(4.0, Rating.Type.EDITORIAL);
+    }
+    public int count3EditorialValues() {
+        return countRatingValue(3.0, Rating.Type.EDITORIAL);
+    }
+    public int count2EditorialValues() {
+        return countRatingValue(2.0, Rating.Type.EDITORIAL);
+    }
+    public int count1EditorialValues() {
+        return countRatingValue(1.0, Rating.Type.EDITORIAL);
+    }
+    public int countEditorialValues() {
+        return countAllRatingValue(Rating.Type.EDITORIAL);
+    }
+
+    public int count5UsersValues() {
+        return countRatingValue(5.0, Rating.Type.USER);
+    }
+    public int count4UsersValues() {
+        return countRatingValue(4.0, Rating.Type.USER);
+    }
+    public int count3UsersValues() {
+        return countRatingValue(3.0, Rating.Type.USER);
+    }
+    public int count2UsersValues() {
+        return countRatingValue(2.0, Rating.Type.USER);
+    }
+    public int count1UsersValues() {
+        return countRatingValue(1.0, Rating.Type.USER);
+    }
+    public int countUsersValues() {
+        return countAllRatingValue(Rating.Type.USER);
+    }
+
+    public double percentOf5UsersValues() {
+        return  100.0 * (double)count5UsersValues() / (double)countAllRatingValue(Rating.Type.USER);
+    }
+    public double percentOf4UsersValues() {
+        return  100.0 * (double)count4UsersValues() / (double)countAllRatingValue(Rating.Type.USER);
+    }
+    public double percentOf3UsersValues() {
+        return  100.0 * (double)count3UsersValues() / (double)countAllRatingValue(Rating.Type.USER);
+    }
+    public double percentOf2UsersValues() {
+        return  100.0 * (double)count2UsersValues() / (double)countAllRatingValue(Rating.Type.USER);
+    }
+    public double percentOf1UsersValues() {
+        return  100.0 * (double)count1UsersValues() / (double)countAllRatingValue(Rating.Type.USER);
+    }
+
+    public double percentOf5EditoralsValues() {
+        return  100.0 * (double)count5EditorialValues() / (double)countAllRatingValue(Rating.Type.EDITORIAL);
+    }
+    public double percentOf4EditoralsValues() {
+        return  100.0 * (double)count4EditorialValues() / (double)countAllRatingValue(Rating.Type.EDITORIAL);
+    }
+    public double percentOf3EditoralsValues() {
+        return  100.0 * (double)count3EditorialValues() / (double)countAllRatingValue(Rating.Type.EDITORIAL);
+    }
+    public double percentOf2EditoralsValues() {
+        return  100.0 * (double)count2EditorialValues() / (double)countAllRatingValue(Rating.Type.EDITORIAL);
+    }
+    public double percentOf1EditoralsValues() {
+        return  100.0 * (double)count1EditorialValues() / (double)countAllRatingValue(Rating.Type.EDITORIAL);
+    }
+    public int countRatingValue(Double value, Rating.Type type) {
+        List<Rating> listRating = new ArrayList<>();
+        switch (type) {
+            case EDITORIAL:
+                for(Rating tmp : getEditorialsRatings()) {
+                    if(tmp.getRating().doubleValue() == value.doubleValue())
+                        listRating.add(tmp);
+                }
+                break;
+            case USER:
+                for(Rating tmp : getUsersRatings()) {
+                    if(tmp.getRating().doubleValue()  == value.doubleValue())
+                        listRating.add(tmp);
+                }
+                break;
+        }
+        return listRating.size();
+    }
+
+    public int countAllRatingValue(Rating.Type type) {
+        List<Rating> listRating = new ArrayList<>();
+        switch (type) {
+            case EDITORIAL:
+                for(Rating tmp : getEditorialsRatings()) {
+                    listRating.add(tmp);
+                }
+                break;
+            case USER:
+                for(Rating tmp : getUsersRatings()) {
+                    listRating.add(tmp);
+                }
+                break;
+        }
+        return listRating.size();
     }
 }

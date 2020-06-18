@@ -65,6 +65,32 @@ public class PostServiceImpl implements PostService {
 
     }
 
+    @Override
+    public Post findById(Long id) {
+        return postRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Post> getAllPosts() {
+        return (List<Post>) postRepository.findAll();
+    }
+
+    @Override
+    public void delete(Post post) {
+        String pathFile = null;
+        if (post.getImgPath() != null) {
+            pathFile = this.prepareFileDirectory() + post.getImgPath();
+        }
+
+        if (pathFile != null) {
+            File file = new File(pathFile);
+            if (file.delete()) {
+                System.out.println("File was deleted:\n" + pathFile);
+            }
+        }
+        postRepository.delete(post);
+    }
+
     private String saveFile(MultipartFile file) {
         String filename = file.getOriginalFilename();
         String extension = this.getExtensionByStringHandling(filename).get();
@@ -107,4 +133,6 @@ public class PostServiceImpl implements PostService {
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1));
     }
+
+
 }

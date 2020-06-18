@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--suppress CheckEmptyScriptTag -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>games-rating.pl - Recenzja</title>
+    <object th:include="/fragment/main :: head_css" th:remove="tag"/>
+    <object th:include="/fragment/main :: head_js" th:remove="tag"/>
+</head>
+<body>
+<div class="wrapper">
+    <object th:include="/fragment/main :: header" th:remove="tag"/>
+    <object th:include="/fragment/main :: navigation" th:remove="tag"/>
+    <div class="single_post">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="single_post_title text-center"
+                         th:text="${errorMessage != null ? errorMessage : 'Error 404: Nie znaleziono takiej strony. Przejdź do strony głównej :)'}">
+                    </div>
+                </div> <!--/ #modalFroms -->
+            </div><!--/.row-->
+        </div><!--/.container-->
+    </div><!--/.single_post-->
+    <object th:include="/fragment/main :: footer" th:remove="tag"/>
+</div><!--/.wrapper-->
+<object th:include="/fragment/main :: js" th:remove="tag"/>
+</body>
+</html>

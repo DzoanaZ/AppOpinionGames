@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<!--suppress CheckEmptyScriptTag -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>games-rating.pl - Recenzja</title>
+    <object th:include="/fragment/main :: head_css" th:remove="tag"/>
+    <object th:include="/fragment/main :: head_js" th:remove="tag"/>
+</head>
+<body>
+<div class="wrapper">
+    <object th:include="/fragment/main :: header" th:remove="tag"/>
+    <object th:include="/fragment/main :: navigation" th:remove="tag"/>
+    <div class="single_post">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="single_post_title text-center" th:utext="${singlePost?.title}">Vivamus sed nunc in arcu
+                        cursus mollis quis et orci. Interdum et
+                        malesuada
+                    </div>
+                    <p class="text-secondary text-right" th:text="${'Kategoria: ' + singlePost?.getCategory()?.name}">
+                        Kategoria</p>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link text-secondary text-right text-danger" href="" data-toggle="modal"
+                       data-target="#modalDelete">Usuń wpis <i class="fa fa-trash text-danger"></i></a>
+
+
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="modal fade bd-example-modal-lg" id="modalDelete">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Potwierdzenie operacji</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    Czy na pewno chcesz usunąć recenzję?
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <a th:href="${'/admin/post/delete/' + singlePost?.id}" class="btn btn-danger">Tak, potwierdzam</a>
+                                    <a class="btn btn-success" data-dismiss="modal">Anuluj</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/ #modalFroms -->
+            </div><!--/.row-->
+        </div><!--/.container-->
+    </div><!--/.single_post-->
+</div><!--/.wrapper-->
+<div class="parallax container-fluid"
+     th:style="'background-image: url(' + ${prepareFileDirectory + singlePost?.imgPath} + ');'"></div>
+<div class="wrapper">
+    <div class="single_post">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="single_post_text" th:utext="${singlePost?.description}">
+                    <p>Mauris viverra cursus ante laoreet eleifend. Donec vel fringilla ante. Aenean finibus velit
+                        id urna vehicula, nec maximus est sollicitudin. Praesent at tempus lectus, eleifend blandit
+                        felis. Fusce augue arcu, consequat a nisl aliquet, consectetur elementum turpis. Donec
+                        iaculis lobortis nisl, et viverra risus imperdiet eu. Etiam mollis posuere elit non
+                        sagittis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis arcu a magna
+                        sodales venenatis. Integer non diam sit amet magna luctus mollis ac eu nisi. In accumsan
+                        tellus ut dapibus blandit.</p>
+
+                    <div class="single_post_quote text-center">
+                        <div class="quote_text">Quisque sagittis non ex eget vestibulum. Sed nec ultrices dui. Cras
+                            et sagittis erat. Maecenas pulvinar, turpis in dictum tincidunt, dolor nibh lacinia
+                            lacus.
+                        </div>
+                        <div class="quote_name">Liam Neeson</div>
+                    </div>
+
+                    <p>Praesent ac magna sed massa euismod congue vitae vitae risus. Nulla lorem augue, mollis non
+                        est et, eleifend elementum ante. Nunc id pharetra magna. Praesent vel orci ornare, blandit
+                        mi sed, aliquet nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra,
+                        per inceptos himenaeos. </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="users-rating">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12 text-center title">
+                        <h5>Ocena redakcji</h5>
+                    </div>
+                    <div class="col-xs-12 col-md-6 text-center">
+                        <h1 class="rating-num"
+                            th:text="${singlePost?.editorialRate !=null ? singlePost?.editorialRate : '0'}">4.0</h1>
+                        <div class="rating" th:if="${singlePost?.getEditorialRate() != null}">
+                            <span class="glyphicon"><i
+                                    th:classappend="${singlePost.getEditorialRate() >= 1} ? 'text-warning' : ''"
+                                    class="fa fa-star "></i></span>
+                            <span class="glyphicon"><i
+                                    th:classappend="${singlePost.getEditorialRate() >= 2} ? 'text-warning' : ''"
+                                    class="fa fa-star "></i></span>
+                            <span class="glyphicon"><i
+                                    th:classappend="${singlePost.getEditorialRate() >= 3} ? 'text-warning' : ''"
+                                    class="fa fa-star "></i></span>
+                            <span class="glyphicon"><i
+                                    th:classappend="${singlePost.getEditorialRate() >= 4} ? 'text-warning' : ''"
+                                    class="fa fa-star "></i></span>
+                            <span class="glyphicon"><i
+                                    th:classappend="${singlePost.getEditorialRate() == 5} ? 'text-warning' : ''"
+                                    class="fa fa-star "></i></span>
+                        </div>
+                        <div class="rating" th:if="${singlePost?.getEditorialRate() == null}">
+                            <span class="glyphicon"><i class="fa fa-star"></i></span>
+                            <span class="glyphicon"><i class="fa fa-star"></i></span>
+                            <span class="glyphicon"><i class="fa fa-star"></i></span>
+                            <span class="glyphicon"><i class="fa fa-star"></i></span>
+                            <span class="glyphicon"><i class="fa fa-star"></i></span>
+                        </div>
+                        <div>
+                            <span th:text="${singlePost?.countEditorialValues() != null ? singlePost?.countEditorialValues() + ' ocen' : '0 ocen'}"></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row rating-desc">
+                            <!-- 5 -->
+                            <div class="col-xs-3 col-md-3 text-right">
+                                <span class="glyphicon"><i class="text-warning fa fa-star"></i></span>5
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <div class="progress progress-striped">
+                                    <div class="progress-bar progress-bar-success" role="progressbar"
+                                         aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         th:style="${'width:' + singlePost?.percentOf5EditoralsValues() + '%'}">
+                                        <span class="sr-only"
+                                              th:text="${singlePost?.percentOf5EditoralsValues() + '%'}">15%</span>
+                                    </div>
+                                </div>
+                            </div><!-- end 5 -->
+                            <!-- 4 -->
+                            <div class="col-xs-3 col-md-3 text-right">
+                                <span class="glyphicon"><i class="text-warning fa fa-star"></i></span>4
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar"
+                                         aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         th:style="${'width:' + singlePost?.percentOf4EditoralsValues() + '%'}">
+                                        <span class="sr-only"
+                                              th:text="${singlePost?.percentOf4EditoralsValues() + '%'}">15%</span>
+                                    </div>
+                                </div>
+                            </div><!-- end 4 -->
+                            <!-- 3 -->
+                            <div class="col-xs-3 col-md-3 text-right">
+                                <span class="glyphicon"><i class="text-warning fa fa-star"></i></span>3
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar"
+                                         aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         th:style="${'width:' + singlePost?.percentOf3EditoralsValues() + '%'}">
+                                        <span class="sr-only"
+                                              th:text="${singlePost?.percentOf3EditoralsValues() + '%'}">15%</span>
+                                    </div>
+                                </div>
+                            </div><!-- end 3 -->
+                            <!-- 2 -->
+                            <div class="col-xs-3 col-md-3 text-right">
+                                <span class="glyphicon"><i class="text-warning fa fa-star"></i></span>2
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar"
+                                         aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         th:style="${'width:' + singlePost?.percentOf2EditoralsValues() + '%'}">
+                                        <span class="sr-only"
+                                              th:text="${singlePost?.percentOf2EditoralsValues() + '%'}">15%</span>
+                                    </div>
+                                </div>
+                            </div><!-- end 2 -->
+                            <!-- 1 -->
+                            <div class="col-xs-3 col-md-3 text-right">
+                                <span class="glyphicon"><i class="text-warning fa fa-star"></i></span>1
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar"
+                                         aria-valuenow="80"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         th:style="${'width:' + singlePost?.percentOf1EditoralsValues() + '%'}">
+                                        <span class="sr-only"
+                                              th:text="${singlePost?.percentOf1EditoralsValues() + '%'}">15%</span>
+                                    </div>
+                                </div>
+                            </div><!-- end 1 -->
+                        </div><!--/.row -->
+                    </div><!--/.col-xs-12 col-md-6-->
+                </div><!--/.row-->
+            </div> <!--/.col-md-6"-->
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12 text-center title">
+                        <h5>Wasza ocena</h5>
+                    </div>
+                    <div class="col-xs-12 col-md-6 text-center">
+                        <h1 class="rating-num"
+                            th:text="${singlePost?.usersRate != null ? singlePost?.usersRate : '0'}">
+                            4.0</h1>
+                        <div class="rating" th:if="${singlePost?.getUsersRate() != null}">
+                            <span class="glyphicon"><i
+                                    th:classappend="${singlePost.getUsersRate() >= 1} ? 'text-warning' : ''"
+                                    class="fa fa-star "></i></span>
+                            <span class="glyphicon"><i
+                                    th:classappend="${singlePost.getUsersRate() >= 2} ? 'text-warning' : ''"
+                                    class="fa fa-star "></i></span>
+                            <span class="glyphicon"><i
+                                    th:classappend="${singlePost.getUsersRate() >= 3} ? 'text-warning' : ''"
+                                    class="fa fa-star "></i></span>
+                            <span class="glyphicon"><i
+                                    th:classappend="${singlePost.getUsersRate() >= 4} ? 'text-warning' : ''"
+                                    class="fa fa-star "></i></span>
+                            <span class="glyphicon"><i
+                                    th:classappend="${singlePost.getUsersRate() == 5} ? 'text-warning' : ''"
+                                    class="fa fa-star "></i></span>
+                        </div>
+                        <div class="rating" th:if="${singlePost?.getUsersRate() == null}">
+                            <span class="glyphicon"><i class="fa fa-star"></i></span>
+                            <span class="glyphicon"><i class="fa fa-star"></i></span>
+                            <span class="glyphicon"><i class="fa fa-star"></i></span>
+                            <span class="glyphicon"><i class="fa fa-star"></i></span>
+                            <span class="glyphicon"><i class="fa fa-star"></i></span>
+                        </div>
+                        <div>
+                            <span th:text="${singlePost?.countUsersValues() != null ? singlePost?.countUsersValues() + ' ocen' : '0 ocen'}"></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row rating-desc">
+                            <!-- 5 -->
+                            <div class="col-xs-3 col-md-3 text-right">
+                                <span class="glyphicon"><i class="text-warning fa fa-star"></i></span>5
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <div class="progress progress-striped">
+                                    <div class="progress-bar progress-bar-success" role="progressbar"
+                                         aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         th:style="${'width:' + singlePost?.percentOf5UsersValues() + '%'}">
+                                        <span class="sr-only"
+                                              th:text="${singlePost?.percentOf5UsersValues() + '%'}">15%</span>
+                                    </div>
+                                </div>
+                            </div><!-- end 5 -->
+                            <!-- 4 -->
+                            <div class="col-xs-3 col-md-3 text-right">
+                                <span class="glyphicon"><i class="text-warning fa fa-star"></i></span>4
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar"
+                                         aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         th:style="${'width:' + singlePost?.percentOf4UsersValues() + '%'}">
+                                        <span class="sr-only"
+                                              th:text="${singlePost?.percentOf4UsersValues() + '%'}">15%</span>
+                                    </div>
+                                </div>
+                            </div><!-- end 4 -->
+                            <!-- 3 -->
+                            <div class="col-xs-3 col-md-3 text-right">
+                                <span class="glyphicon"><i class="text-warning fa fa-star"></i></span>3
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar"
+                                         aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         th:style="${'width:' + singlePost?.percentOf3UsersValues() + '%'}">
+                                        <span class="sr-only"
+                                              th:text="${singlePost?.percentOf3UsersValues() + '%'}">15%</span>
+                                    </div>
+                                </div>
+                            </div><!-- end 3 -->
+                            <!-- 2 -->
+                            <div class="col-xs-3 col-md-3 text-right">
+                                <span class="glyphicon"><i class="text-warning fa fa-star"></i></span>2
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar"
+                                         aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         th:style="${'width:' + singlePost?.percentOf2UsersValues() + '%'}">
+                                        <span class="sr-only"
+                                              th:text="${singlePost?.percentOf2UsersValues() + '%'}">15%</span>
+                                    </div>
+                                </div>
+                            </div><!-- end 2 -->
+                            <!-- 1 -->
+                            <div class="col-xs-3 col-md-3 text-right">
+                                <span class="glyphicon"><i class="text-warning fa fa-star"></i></span>1
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar"
+                                         aria-valuenow="80"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         th:style="${'width:' + singlePost?.percentOf1UsersValues() + '%'}">
+                                        <span class="sr-only"
+                                              th:text="${singlePost?.percentOf1UsersValues() + '%'}">15%</span>
+                                    </div>
+                                </div>
+                            </div><!-- end 1 -->
+                        </div><!--/.row -->
+                    </div><!--/.col-xs-12 col-md-6-->
+                </div><!--/.row-->
+            </div> <!--/.col-md-6"-->
+        </div><!--/.row-->
+    </div><!--/.users-rating-->
+    <div class="container comments">
+        <h3>Komentarze i opinie</h3>
+        <div class="card" th:if="${singlePost?.getUsersRatings().isEmpty()}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>Brak ocen i komentarzy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" th:each="rating: ${singlePost?.getUsersRatings()}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img th:src="@{/img/def_awatar.jpg}" src="../static/img/def_awatar.jpg" alt="Awatar"
+                             class="img img-rounded img-fluid"/>
+                        <p class="text-secondary text-center"
+                           th:text="${#temporals.format(rating.ratingDate, 'dd-MM-yyyy HH:mm')}">Data i czas
+                            komentarza</p>
+                    </div>
+                    <div class="col-md-10">
+                        <p>
+                            <a class="float-left"><strong th:text="${rating.getUser()?.name}">Autor</strong></a>
+                            <span class="float-right"><i th:classappend="${rating.getRating()==5} ? 'text-warning' : ''"
+                                                         class="fa fa-star "></i></span>
+                            <span class="float-right"><i th:classappend="${rating.getRating()>=4} ? 'text-warning' : ''"
+                                                         class="fa fa-star "></i></span>
+                            <span class="float-right"><i th:classappend="${rating.getRating()>=3} ? 'text-warning' : ''"
+                                                         class="fa fa-star "></i></span>
+                            <span class="float-right"><i th:classappend="${rating.getRating()>=2} ? 'text-warning' : ''"
+                                                         class="fa fa-star "></i></span>
+                            <span class="float-right"><i th:classappend="${rating.getRating()>=1} ? 'text-warning' : ''"
+                                                         class="fa fa-star "></i></span>
+                        </p>
+                        <div class="clearfix"></div>
+                        <p th:text="${rating.getComment()}">Lorem Ipsum is simply dummy text of the pr make but also the
+                            leap into electronic
+                            typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+                            release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                            publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <p>
+                            <!--<a class="float-right btn btn-outline-primary ml-2"> <i class="fa fa-reply"></i> Reply</a>
+                            <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>-->
+                        </p>
+                    </div>
+                </div> <!--/.row-->
+            </div> <!--/.card-body-->
+        </div> <!--/.card-->
+    </div> <!--/.container comments-->
+    <div class="container add-comment">
+        <h4>Dodaj opinie</h4>
+
+        <div class="card" sec:authorize="!isAuthenticated()">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>Dodawanie komentarzy dostępne wyłącznie dla zalogowanych użytkowników</p>
+                        <a class="btn btn-success" href="" data-toggle="modal" data-target="#modalFroms">Zaloguj</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form sec:authorize="isAuthenticated()" class="form-horizontal"
+              th:action="${'/user/rating/new/' + singlePost?.id}" th:method="POST">
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="comment">Ocena:</label>
+                    <div class="controls">
+                        <div class="rating">
+                            <input type="radio" id="star5" name="rating" value="5"/>
+                            <label class="full" for="star5" title="Świetna - 5 gwiazdek"></label>
+
+                            <input type="radio" id="star4" name="rating" value="4"/>
+                            <label class="full" for="star4" title="Bardzo dobra - 4 gwiazdek"></label>
+
+                            <input type="radio" id="star3" name="rating" value="3"/>
+                            <label class="full" for="star3" title="W porządku - 3 gwiazdek"></label>
+
+                            <input type="radio" id="star2" name="rating" value="2"/>
+                            <label class="full" for="star2" title="Przeciętna - 2 gwiazdki"></label>
+
+                            <input type="radio" id="star1" name="rating" value="1"/>
+                            <label class="full" for="star1" title="Bardzo słaba - 1 gwiazdka"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="comment">Komentarz:</label>
+                    <div class="controls">
+                        <textarea required id="comment" name="comment" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="send"></label>
+                    <div class="controls">
+                        <button id="send" name="send" class="btn btn-success">Wyślij</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div><!--/.container add-comment-->
+    <object th:include="/fragment/main :: footer" th:remove="tag"/>
+</div><!--/.wrapper-->
+<object th:include="/fragment/main :: js" th:remove="tag"/>
+</body>
+</html>

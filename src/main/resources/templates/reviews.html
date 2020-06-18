@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--suppress CheckEmptyScriptTag -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>games-rating.pl - Recenzje</title>
+    <object th:include="/fragment/main :: head_css" th:remove="tag"/>
+    <object th:include="/fragment/main :: head_js" th:remove="tag"/>
+</head>
+<body>
+<div class="wrapper">
+    <object th:include="/fragment/main :: header" th:remove="tag"/>
+    <object th:include="/fragment/main :: navigation" th:remove="tag"/>
+    <article class="news">
+        <section class="post">
+            <h1>Recenzje</h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="reviews_container">
+                            <div th:each="post : ${postsList}"
+                                 class="review d-flex flex-row align-items-start justify-content-start">
+                                <div class="review_image"><img th:src="${prepareFileDirectory + post.imgPath}"
+                                                               th:alt="${post.title}"></div>
+                                <div class="review_content">
+                                    <div class="review_name"><a th:href="${'/post/' + post.id}" th:text="${post.title}">Title</a></div>
+                                    <div class="review_rating_container">
+                                        <div class="rating_r  review_rating">
+                                            <i th:classappend="${post.editorialRating>= 1} ? 'checked' : ''"
+                                               class="fa fa-star"></i>
+                                            <i th:classappend="${post.editorialRating>= 2} ? 'checked' : ''"
+                                               class="fa fa-star"></i>
+                                            <i th:classappend="${post.editorialRating>= 3} ? 'checked' : ''"
+                                               class="fa fa-star"></i>
+                                            <i th:classappend="${post.editorialRating>= 4} ? 'checked' : ''"
+                                               class="fa fa-star"></i>
+                                            <i th:classappend="${post.editorialRating== 5} ? 'checked' : ''"
+                                               class="fa fa-star"></i>
+                                        </div>
+                                        <div class="review_time"
+                                             th:text="${#temporals.format(post.publicationDate, 'dd-MM-yyyy')}">Data
+                                        </div>
+                                    </div>
+                                    <div class="review_text"><p th:text="${post.shortDescription}">Lorem ipsum dolor sit
+                                        amet, consectetur adipiscing elit.
+                                        Maecenas fermentum laoreet. Lorem ipsum dolor sit amet, consectetur adipiscing
+                                        elit. Maecenas fermentum laoreet. Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit. Maecenas fermentum laoreet.</p></div>
+                                </div><!--/.review_content-->
+                            </div><!--/.review-->
+                        </div><!--/.reviews_container-->
+                    </div><!--/.col-md-12-->
+                </div><!--/.row-->
+            </div><!--/.container-->
+        </section><!--/.post-->
+    </article><!--/.news-->
+    <object th:include="/fragment/main :: footer" th:remove="tag"/>
+</div>
+<object th:include="/fragment/main :: js" th:remove="tag"/>
+</body>
+</html>

@@ -24,7 +24,7 @@ public class CategoryController {
         return "edit_categories";
     }
 
-    @GetMapping("/admin/categories/delete/{id]")
+    @GetMapping("/admin/categories/delete/{id}")
     public ResponseEntity deleteCategory(@PathVariable Long id) {
         //nie musimy sprawdzać uprawnień użytkownika bo do /admin ma dostęp tylko admin
         if (id > 0) {
@@ -55,7 +55,8 @@ public class CategoryController {
             categoryService.createCategory(cat);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+            categoryService.createCategory(new Category(id,name));
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 }
