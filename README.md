@@ -1,5 +1,5 @@
 # AppOpinionGames
-The web application with e-sports content was created to popularize games (in terms of their reliable say) and play players to share feelings (opinions).
+A web application for reviewing and rating games. The web application with e-sports content was created to popularize games (in terms of their reliable say) and play players to share feelings (opinions).
  
 ## About the application
 The task of the web application is to provide reviews and enable its users to add their own opinions. The goal of the project is to prepare an application that ** will enable registration of new users, adding new reviews, game searches and adding opinions and comments. ** 
