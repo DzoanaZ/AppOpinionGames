@@ -45,18 +45,18 @@ public class CategoryController {
         Category cat = null;
         if (id > 0) {
             cat = categoryService.getCategoryById(id);
-        } else {
-            List<Category> catList = (List<Category>) categoryService.getCategoriesByName(name);
-            if (!catList.isEmpty()) {
-                cat = catList.get(0);
+            cat.setName(name);
+
+            //noinspection ConstantConditions
+            if (cat != null) {
+                categoryService.createCategory(cat);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                categoryService.createCategory(new Category(id,name));
+                return new ResponseEntity<>(HttpStatus.OK);
             }
-        }
-        if (cat != null) {
-            categoryService.createCategory(cat);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            categoryService.createCategory(new Category(id,name));
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+        } else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 }

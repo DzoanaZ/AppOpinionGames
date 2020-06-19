@@ -26,7 +26,8 @@ public class MainController {
     @GetMapping(value = "/404")
     public String error404(Model model) {
         model.addAttribute("gameCategories", categoryService.getAllCategories());
-        model.addAttribute("errorMessage", "Error 404: Nie znaleziono takiej strony. Przejdź do strony głównej :)");
+        if (model.getAttribute("errorMessage") == null)
+            model.addAttribute("errorMessage", "Error 404: Nie znaleziono takiej strony. Przejdź do strony głównej :)");
         return "error";
     }
 

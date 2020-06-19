@@ -17,6 +17,7 @@ import pl.gamesrating.app.service.CategoryService;
 import pl.gamesrating.app.service.PostService;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 public class PostController {
@@ -35,14 +36,19 @@ public class PostController {
     }
 
     @PostMapping("/admin/post/new") //przesłanie danych z formularza
-    public String createNewPost(@ModelAttribute ("newPost") @Valid PostDTO postDTO){
+    public String createNewPost(@ModelAttribute ("newPost") @Valid PostDTO postDTO, Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = null;
         if (auth != null){
             user = userRepository.findByEmail(auth.getName());
         }
         if (user != null){
-            postService.savePost(postDTO, user);
+            try {
+                postService.savePost(postDTO, user);
+            } catch (IOException e) {
+                model.addAttribute("errorMessage", "Błąd podczas zapisywania pliku: " + e.getMessage());
+                return "redirect:/404";
+            }
         }
         return "redirect:/"; //przekierowanie na stronę główną
     }

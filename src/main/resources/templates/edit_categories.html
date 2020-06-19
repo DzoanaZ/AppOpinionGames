@@ -45,36 +45,6 @@
                                                         value="Zapisz"></td>
                             </td>
                         </tr>
-
-                        <!-- <tr>
-                             <td class="col-sm-4">
-                                 <input type="text" name="id" class="form-control" value="2" readonly/>
-                             </td>
-                             <td class="col-sm-4">
-                                 <input type="text" name="name" class="form-control" value="Wyścigowe"/>
-                             </td>
-                             <td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "
-                                                         data-toggle="modal" data-target="#confirmDelete" value="Usuń">
-                             </td>
-                             <td class="col-sm-1"><input type="button" class="ibtnSave btn btn-md btn-success "
-                                                         value="Zapisz"></td>
-                             </td>
-                         </tr>
-
-                         <tr>
-                             <td class="col-sm-4">
-                                 <input type="text" name="id" class="form-control" value="3" readonly/>
-                             </td>
-                             <td class="col-sm-4">
-                                 <input type="text" name="name" class="form-control" value="Sportowe"/>
-                             </td>
-                             <td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger "
-                                                         data-toggle="modal" data-target="#confirmDelete" value="Usuń">
-                             </td>
-                             <td class="col-sm-1"><input type="button" class="ibtnSave btn btn-md btn-success "
-                                                         value="Zapisz"></td>
-                             </td>
-                         </tr> -->
                         </tbody>
                         <tfoot>
                         <tr>
@@ -96,8 +66,7 @@
 
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <span id="recordId" style="display: none"></span>Czy na pewno chcesz usunąć
-                                    kategorię "<span id="recordName"></span>"?
+                                    <span id="recordId" style="display: none"></span>Czy na pewno chcesz usunąć kategorię "<span id="recordName"></span>"?
                                 </div>
 
                                 <!-- Modal footer -->
@@ -151,8 +120,8 @@
         $("#addrow").on("click", function () {
             var newRow = $("<tr>");
             var cols = '';
-            cols += '<td class="col-sm-4"><input type="text" name="id" class="form-control" readonly /></td>';
-            cols += '<td class="col-sm-4"><input type="text" name="name"  class="form-control"/></td>';
+            cols += '<td class="col-sm-2"><input type="text" name="id" class="form-control" readonly /></td>';
+            cols += '<td class="col-sm-8"><input type="text" name="name"  class="form-control"/></td>';
             cols += '<td class="col-sm-1"><input type="button" class="ibtnDel btn btn-md btn-danger " data-toggle="modal" data-target="#confirmDelete" value="Usuń"></td>';
             cols += '<td class="col-sm-1"><input type="button" class="ibtnSave btn btn-md btn-success "  value="Zapisz"></td>';
             newRow.append(cols);
@@ -166,10 +135,12 @@
 
             if (name) {
                 saveOrUpdate(id, name);
+            } else {
+                alert("Nazwa kategorii nie może być pusta.");
             }
         });
     });
-
+    //Ajax - wysyła żądanie metodą GET, aby zapisać lub zaktualizować kategorię
     function saveOrUpdate(id, name) {
         $.ajax({
             type: "GET",
@@ -184,22 +155,8 @@
 
             }
         });
-        /*var xhttp;
-        xhttp = new XMLHttpRequest();
-        query = "?id="+(id ? id : -1)+"&name="+name;
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                alert("Kategoria zapisana z sukcesem :)");
-                location.reload();
-            } else if (this.readyState == 4) {
-                alert("Nie udało się zapisać kategorii");
-            }
-        };
-        xhttp.open("GET", "/admin/categories/new/" + query, true);
-        xhttp.send();*/
-
     }
-
+    //Ajax - wysyła żądanie metodą GET, aby usunąć kategorię
     function isDeleted(value, tr, name) {
         $.ajax({
             type: "GET",
@@ -211,22 +168,8 @@
             },
             error: function () {
                 alert("Nie można usunąć kategorię \"" + name + "\"");
-
             }
         });
-
-        /*var xhttp;
-        xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                tr.remove();
-                alert("Usunięto kategorię \"" + name + "\"");
-            } else if (this.readyState == 4) {
-                alert("Nie można usunąć kategorię \"" + name + "\"");
-            }
-        };
-        xhttp.open("GET", "/admin/categories/delete/" + value, true);
-        xhttp.send();*/
     }
 </script>
 </body>

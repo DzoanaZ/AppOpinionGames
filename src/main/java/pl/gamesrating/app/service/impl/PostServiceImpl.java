@@ -41,7 +41,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void savePost(PostDTO postDTO, User user) {
+    public void savePost(PostDTO postDTO, User user) throws IOException {
         Post newPost = new Post();
         newPost.setAuthor(user);
         newPost.setCategory(categoryRepository.findById(postDTO.getCategoryId()).get());
@@ -91,23 +91,19 @@ public class PostServiceImpl implements PostService {
         postRepository.delete(post);
     }
 
-    private String saveFile(MultipartFile file) {
+    private String saveFile(MultipartFile file) throws IOException {
         String filename = file.getOriginalFilename();
-        String extension = this.getExtensionByStringHandling(filename).get();
+        String extension = this.getExtensionByStringHandling(filename).orElse("");
 
         if (!file.isEmpty()) {
-            try {
-                UUID uuid = UUID.randomUUID();
-                filename = "/upload_" + uuid.toString() + (extension.isEmpty() ? "" : "." + extension);
-                byte[] bytes = file.getBytes();
-                File fsFile = new File(this.prepareFileDirectory() + filename);
-                fsFile.createNewFile();
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fsFile));
-                stream.write(bytes);
-                stream.close();
-            } catch (Exception e) {
-                System.out.println("File has not been uploaded:\n" + e);
-            }
+            UUID uuid = UUID.randomUUID();
+            filename = "/upload_" + uuid.toString() + (extension.isEmpty() ? "" : "." + extension);
+            byte[] bytes = file.getBytes();
+            File fsFile = new File(this.prepareFileDirectory() + filename);
+            fsFile.createNewFile();
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fsFile));
+            stream.write(bytes);
+            stream.close();
         } else {
             filename = null;
             System.out.println("Uploaded file is empty");
