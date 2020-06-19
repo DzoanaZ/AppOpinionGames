@@ -68,7 +68,7 @@ public class Post {
     }
 
     public Double getEditorialRate() {
-        return editorialRate;
+        return roundToDecimal(editorialRate, 2);
     }
 
     public void setEditorialRate(Double editorialRate) {
@@ -76,7 +76,8 @@ public class Post {
     }
 
     public Double getUsersRate() {
-        return usersRate;
+
+        return roundToDecimal(usersRate, 2);
     }
 
     public void setUsersRate(Double usersRate) {
@@ -131,6 +132,11 @@ public class Post {
         this.ratings = ratings;
     }
 
+    public static double roundToDecimal(double num, int dec) {
+        int multi = (int) Math.pow(10, dec);
+        int temp = (int) Math.round(num * multi);
+        return (double) temp / multi;
+    }
 
     public List<Rating> getUsersRatings() {
         List<Rating> usersRatings = new ArrayList<>();
