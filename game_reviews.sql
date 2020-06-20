@@ -21,9 +21,9 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `game_reviews`
 --
-DROP DATABASE IF EXISTS `game_reviews`;
-CREATE DATABASE IF NOT EXISTS `game_reviews` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `game_reviews`;
+-- DROP DATABASE IF EXISTS `game_reviews`;
+-- CREATE DATABASE IF NOT EXISTS `game_reviews` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- USE `game_reviews`;
 
 -- --------------------------------------------------------
 
@@ -45,6 +45,74 @@ INSERT INTO `category` (`id`, `name`) VALUES
 (2, 'Zręcznościowe'),
 (3, 'Symulacyjne'),
 (4, 'Science fiction');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `role`
+--
+
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` bigint(20) NOT NULL,
+  `role` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Zrzut danych tabeli `role`
+--
+
+INSERT INTO `role` (`id`, `role`) VALUES
+(1, 'ROLE_USER'),
+(2, 'ROLE_ADMIN');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL,
+  `active` int(11) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Zrzut danych tabeli `user`
+--
+
+INSERT INTO `user` (`id`, `active`, `email`, `name`, `password`) VALUES
+(1, 1, 'zubeljoanna@gmail.com', 'Joanna', '$2a$11$JbxASv0uBThQpwzKue0sr.7g3.q3jaKPeBdAvkVWHSwcrkRtQhoIC'),
+(2, 1, 'gamer123@gmail.com', 'Gamer123', '$2a$11$.CRj2yECS41JHDdNt0dPv.TGvNIejOuT4uzS3yp5CU.7v/GsKJAsO'),
+(3, 1, 'gamerka1995@op.pl', 'Gmerka1995', '$2a$11$ZmxvjjrC3T7K2OEOT.Mk0uIhfyHoKxiC2R2suJ5mV6H4dVdtlKErG'),
+(4, 1, 'pablito@gmail.com', 'Pablito', '$2a$11$7HKRXr.BAzR6psKC050lW.dzpYbI9RRyVtZdIl4MxRjj.PooVrQ0S');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `users_roles`
+--
+
+DROP TABLE IF EXISTS `users_roles`;
+CREATE TABLE `users_roles` (
+  `user_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Zrzut danych tabeli `users_roles`
+--
+
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
+(1, 1),
+(1, 2),
+(2, 1),
+(3, 1),
+(4, 1);
 
 -- --------------------------------------------------------
 
@@ -116,71 +184,6 @@ INSERT INTO `rating` (`id`, `comment`, `rating`, `rating_date`, `type`, `post_id
 
 -- --------------------------------------------------------
 
---
--- Struktura tabeli dla tabeli `role`
---
-
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE `role` (
-  `id` bigint(20) NOT NULL,
-  `role` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Zrzut danych tabeli `role`
---
-
-INSERT INTO `role` (`id`, `role`) VALUES
-(1, 'ROLE_USER'),
-(2, 'ROLE_ADMIN');
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `user`
---
-
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `id` bigint(20) NOT NULL,
-  `active` int(11) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Zrzut danych tabeli `user`
---
-
-INSERT INTO `user` (`id`, `active`, `email`, `name`, `password`) VALUES
-(1, 1, 'zubeljoanna@gmail.com', 'Joanna', '$2a$11$JbxASv0uBThQpwzKue0sr.7g3.q3jaKPeBdAvkVWHSwcrkRtQhoIC'),
-(2, 1, 'gamer123@gmail.com', 'Gamer123', '$2a$11$.CRj2yECS41JHDdNt0dPv.TGvNIejOuT4uzS3yp5CU.7v/GsKJAsO'),
-(3, 1, 'gamerka1995@op.pl', 'Gmerka1995', '$2a$11$ZmxvjjrC3T7K2OEOT.Mk0uIhfyHoKxiC2R2suJ5mV6H4dVdtlKErG'),
-(4, 1, 'pablito@gmail.com', 'Pablito', '$2a$11$7HKRXr.BAzR6psKC050lW.dzpYbI9RRyVtZdIl4MxRjj.PooVrQ0S');
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `users_roles`
---
-
-DROP TABLE IF EXISTS `users_roles`;
-CREATE TABLE `users_roles` (
-  `user_id` bigint(20) NOT NULL,
-  `role_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Zrzut danych tabeli `users_roles`
---
-
-INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
-(1, 1),
-(1, 2),
-(2, 1),
-(3, 1),
-(4, 1);
 
 --
 -- Indeksy dla zrzutów tabel
