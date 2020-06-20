@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>games-rating.pl - Recenzje</title>
-    <object th:include="/fragment/main :: head_css" th:remove="tag"/>
-    <object th:include="/fragment/main :: head_js" th:remove="tag"/>
+    <object th:include="fragment/main :: head_css" th:remove="tag"/>
+    <object th:include="fragment/main :: head_js" th:remove="tag"/>
 </head>
 <body>
 <div class="wrapper">
-    <object th:include="/fragment/main :: header" th:remove="tag"/>
-    <object th:include="/fragment/main :: navigation" th:remove="tag"/>
+    <object th:include="fragment/main :: header" th:remove="tag"/>
+    <object th:include="fragment/main :: navigation" th:remove="tag"/>
     <article class="news">
         <section class="post">
             <h1>Recenzje</h1>
@@ -54,8 +54,8 @@
             </div><!--/.container-->
         </section><!--/.post-->
     </article><!--/.news-->
-    <object th:include="/fragment/main :: footer" th:remove="tag"/>
+    <object th:include="fragment/main :: footer" th:remove="tag"/>
 </div>
-<object th:include="/fragment/main :: js" th:remove="tag"/>
+<object th:include="fragment/main :: js" th:remove="tag"/>
 </body>
 </html>

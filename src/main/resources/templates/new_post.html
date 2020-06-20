@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>games-rating.pl - Recenzje</title>
-    <object th:include="/fragment/main :: head_css" th:remove="tag"/>
-    <object th:include="/fragment/main :: head_js" th:remove="tag"/>
+    <object th:include="fragment/main :: head_css" th:remove="tag"/>
+    <object th:include="fragment/main :: head_js" th:remove="tag"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 </head>
 <body>
 <div class="wrapper">
-    <object th:include="/fragment/main :: header" th:remove="tag"/>
-    <object th:include="/fragment/main :: navigation" th:remove="tag"/>
+    <object th:include="fragment/main :: header" th:remove="tag"/>
+    <object th:include="fragment/main :: navigation" th:remove="tag"/>
     <article class="news">
         <section class="post">
             <h1>Dodaj nową recenzję</h1>
@@ -81,9 +81,9 @@
         </section>
     </article>
 
-    <object th:include="/fragment/main :: footer" th:remove="tag"/>
+    <object th:include="fragment/main :: footer" th:remove="tag"/>
 </div>
-<object th:include="/fragment/main :: js" th:remove="tag"/>
+<object th:include="fragment/main :: js" th:remove="tag"/>
 <script>
     $('#editor').summernote({
         placeholder: 'Uzupełnij treść ogłoszenia',
