@@ -41,9 +41,10 @@ public class CategoryController {
     @GetMapping("/admin/categories/new")
     public ResponseEntity saveOrUpdate(@RequestParam Long id, @RequestParam String name) {
         Category cat = categoryService.getCategoryById(id);
-        cat.setName(name);
+
         //noinspection ConstantConditions
         if (cat != null && cat.getId()>-1L) {
+            cat.setName(name);
             categoryService.createOrSaveCategory(cat);
         } else {
             categoryService.createOrSaveCategory(new Category(id,name));
