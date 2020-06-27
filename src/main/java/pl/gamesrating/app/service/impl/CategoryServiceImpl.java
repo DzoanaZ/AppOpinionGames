@@ -11,7 +11,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
     @Override
-    public Category createCategory(Category category) {
+    public Category createOrSaveCategory(Category category) {
         return categoryRepository.save(category);
 
     }

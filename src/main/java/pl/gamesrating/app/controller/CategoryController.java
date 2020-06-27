@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.gamesrating.app.model.Category;
 import pl.gamesrating.app.service.CategoryService;
 
-import java.util.List;
-
 @Controller
 public class CategoryController {
     @Autowired
@@ -42,21 +40,16 @@ public class CategoryController {
 
     @GetMapping("/admin/categories/new")
     public ResponseEntity saveOrUpdate(@RequestParam Long id, @RequestParam String name) {
-        Category cat = null;
-        if (id > 0) {
-            cat = categoryService.getCategoryById(id);
-            cat.setName(name);
+        Category cat = categoryService.getCategoryById(id);
+        cat.setName(name);
+        //noinspection ConstantConditions
+        if (cat != null && cat.getId()>-1L) {
+            categoryService.createOrSaveCategory(cat);
+        } else {
+            categoryService.createOrSaveCategory(new Category(id,name));
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
 
-            //noinspection ConstantConditions
-            if (cat != null) {
-                categoryService.createCategory(cat);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                categoryService.createCategory(new Category(id,name));
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
-        } else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
 }
